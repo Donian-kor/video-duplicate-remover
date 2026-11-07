@@ -29,7 +29,7 @@ python main.py
 - **유사도 임계값**: 낮을수록 엄격 (기본 12). 압축 차이가 큰 중복은 값을 올려보세요.
 
 ## 파일 구성
-- exe 배포판: `dist\VideoDedup\VideoDedup.exe` (도움말.html 포함)
+- 단일 exe: `dist\VideoDedup.exe` (도움말 내장)
 - 스캔 중 CPU/디스크를 사용합니다. 대용량 폴더는 시간이 걸릴 수 있습니다.
 
 
@@ -38,5 +38,5 @@ python main.py
 - Python 소스 실행 시 추가 패키지: PySide6, opencv-python, numpy, send2trash (requirements.txt)
 
 ## 배포
-- exe 배포판: `dist\VideoDedup\VideoDedup.exe` (도움말.html 포함)
+- 단일 exe: `dist\VideoDedup.exe` (도움말 내장)
 - 소스코드는 비공개이며 exe로만 배포합니다.
