@@ -17,6 +17,7 @@ from core.grouper import group_duplicates
 from core.quality import pick_keeper, to_delete
 from core import ffmpeg_manager as fm
 from core import recycle as rcy
+from ui.help_dialog import HelpDialog
 
 
 def collect_videos(folder, recursive):
@@ -121,6 +122,7 @@ class MainWindow(QMainWindow):
         self.resize(1100, 720)
         self.worker = None
         self.ff_worker = None
+        self._help_dlg = None
         self.groups = []
         self._build_ui()
         QTimer.singleShot(200, self.check_ffmpeg)
@@ -333,19 +335,14 @@ class MainWindow(QMainWindow):
         self.start_ffmpeg_download()
 
     def open_help(self):
-        import sys
-        if getattr(sys, "frozen", False):
-            base = getattr(sys, "_MEIPASS", os.path.dirname(sys.executable))
-        else:
-            base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        path = os.path.join(base, "도움말.html")
-        if not os.path.isfile(path):
-            QMessageBox.warning(self, "도움말", f"도움말 파일을 찾을 수 없습니다.\n{path}")
+        if getattr(self, "_help_dlg", None) is not None and self._help_dlg.isVisible():
+            self._help_dlg.raise_()
+            self._help_dlg.activateWindow()
             return
-        try:
-            os.startfile(path)
-        except Exception as e:
-            QMessageBox.warning(self, "도움말", f"도움말을 열 수 없습니다.\n{e}")
+        dlg = HelpDialog(self)
+        self._help_dlg = dlg
+        dlg.finished.connect(lambda: setattr(self, "_help_dlg", None))
+        dlg.show()
 
     def start_ffmpeg_download(self):
         self.btn_scan.setEnabled(False)
