@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Build artifacts
+build/
+dist/
+*.spec
+
+# FFmpeg tools (auto-downloaded)
+tools/
+
+# Deleted files backup
+_삭제된_중복영상/
+
+# IDE
+.vscode/
+.idea/

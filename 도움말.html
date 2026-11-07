@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>동영상 중복 제거기 - 도움말</title>
+<style>
+  :root {
+    --bg: #0f172a; --card: #1e293b; --accent: #38bdf8; --accent2: #22d3ee;
+    --text: #e2e8f0; --muted: #94a3b8; --danger: #f87171; --ok: #4ade80;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Malgun Gothic", "Segoe UI", sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: var(--text); line-height: 1.7; }
+  .container { max-width: 1000px; margin: 0 auto; padding: 32px 24px 64px; }
+  header { text-align: center; padding: 40px 0 24px; }
+  header h1 { font-size: 2.4rem; margin: 0; background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  header p { color: var(--muted); font-size: 1.1rem; margin-top: 8px; }
+  .card { background: var(--card); border-radius: 16px; padding: 28px; margin: 24px 0; box-shadow: 0 10px 30px rgba(0,0,0,.3); border: 1px solid rgba(255,255,255,.06); }
+  h2 { color: var(--accent); border-left: 4px solid var(--accent); padding-left: 12px; margin-top: 0; }
+  h3 { color: var(--accent2); margin-top: 20px; }
+  .step { display: flex; gap: 16px; margin: 16px 0; align-items: flex-start; }
+  .step .num { background: var(--accent); color: #0f172a; font-weight: 700; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step .body { flex: 1; }
+  code { background: #0b1220; color: #fbbf24; padding: 2px 8px; border-radius: 6px; font-family: Consolas, monospace; font-size: 0.92em; }
+  pre { background: #0b1220; color: #e2e8f0; padding: 16px; border-radius: 10px; overflow-x: auto; border: 1px solid rgba(255,255,255,.08); }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+  th, td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,.08); text-align: left; }
+  th { color: var(--accent); background: rgba(56,189,248,.08); }
+  .tip { background: rgba(56,189,248,.08); border-left: 4px solid var(--accent); padding: 12px 16px; border-radius: 8px; margin: 12px 0; }
+  .warn { background: rgba(248,113,113,.08); border-left: 4px solid var(--danger); padding: 12px 16px; border-radius: 8px; margin: 12px 0; }
+  ul li { margin: 6px 0; }
+  footer { text-align: center; color: var(--muted); font-size: 0.9rem; margin-top: 40px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🎬 동영상 중복 제거기</h1>
+    <p>같은 영상의 여러 버전 중 가장 좋은 품질만 남기고 나머지를 정리합니다</p>
+  </header>
+
+  <div class="card">
+    <h2>1. 프로그램 소개</h2>
+    <p>동영상을 많이 모으다 보면 같은 영상이 480p, 720p, 1080p 등 여러 해상도로 중복 저장되는 경우가 많습니다.
+    이 프로그램은 폴더를 스캔해 <b>같은 영상</b>을 자동으로 묶고, 그중 <b>해상도 → 비트레이트 → 용량</b>이 가장 좋은 파일 1개만 "유지"로 표시한 뒤 나머지를 <b>휴지통</b>으로 이동합니다.</p>
+    <ul>
+      <li>✅ 자동 중복 탐지 (프레임 지각 해시 기반)</li>
+      <li>✅ 품질 비교 후 최고 품질만 보존</li>
+      <li>✅ 삭제 전 체크박스로 수동 조정 가능 (유지 파일도 체크 시 삭제 가능)</li>
+      <li>✅ 삭제는 휴지통 이동 → 실수 시 복원 가능 (실패 시 바탕화면 백업 폴더)</li>
+      <li>✅ 하위 폴더 포함 스캔 지원</li>
+      <li>✅ FFmpeg 자동 설치 지원</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>2. 실행 방법 (exe 배포판)</h2>
+    <div class="step"><div class="num">1</div><div class="body"><b>exe 실행</b><br><code>VideoDedup.exe</code> 를 더블클릭합니다. 설치 과정 없이 바로 실행됩니다.</div></div>
+    <div class="step"><div class="num">2</div><div class="body"><b>FFmpeg 확인</b><br>처음 실행 시 FFmpeg가 없으면 자동 다운로드 여부를 묻습니다. "예"를 선택하면 약 110MB를 다운로드해 자동 설치합니다.</div></div>
+    <div class="tip">💡 별도의 Python 설치나 소스코드는 필요 없습니다. exe 하나로 동작합니다.</div>
+  </div>
+
+  <div class="card">
+    <h2>3. 화면 구성</h2>
+    <table>
+      <tr><th>영역</th><th>설명</th></tr>
+      <tr><td>폴더 입력창 + 찾아보기</td><td>스캔할 폴더를 지정합니다.</td></tr>
+      <tr><td>하위 폴더 포함</td><td>체크하면 하위 폴더까지 재귀적으로 스캔합니다.</td></tr>
+      <tr><td>샘플 프레임 수</td><td>영상에서 비교에 사용할 프레임 개수 (3~16, 기본 8).</td></tr>
+      <tr><td>유사도 임계값</td><td>낮을수록 엄격 (기본 12). 압축 차이가 큰 중복은 값을 올립니다.</td></tr>
+      <tr><td>스캔 시작 / 중지</td><td>스캔을 시작하거나 중단합니다.</td></tr>
+      <tr><td>선택한 파일 삭제</td><td>체크된 파일을 삭제합니다 (휴지통 우선, 실패 시 백업 폴더).</td></tr>
+      <tr><td>FFmpeg 자동 설치</td><td>FFmpeg가 없을 때 수동으로 설치합니다.</td></tr>
+      <tr><td>도움말</td><td>이 문서를 엽니다.</td></tr>
+      <tr><td>진행률 표시줄</td><td>현재 진행 상태와 처리 중인 파일명을 보여줍니다.</td></tr>
+      <tr><td>결과 테이블</td><td>중복 그룹별 파일 목록, 해상도, 비트레이트, 용량, 길이, 판정을 표시합니다.</td></tr>
+      <tr><td>로그 창</td><td>스캔/삭제 과정과 오류를 기록합니다.</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>4. 사용 순서 (단계별)</h2>
+    <div class="step"><div class="num">1</div><div class="body"><b>폴더 선택</b><br>"찾아보기" 버튼을 눌러 동영상이 들어 있는 폴더를 선택합니다.</div></div>
+    <div class="step"><div class="num">2</div><div class="body"><b>옵션 설정</b><br>하위 폴더 포함 여부, 샘플 프레임 수, 유사도 임계값을 조정합니다.</div></div>
+    <div class="step"><div class="num">3</div><div class="body"><b>스캔 시작</b><br>"스캔 시작" 버튼을 누릅니다. 중단하려면 "중지"를 누릅니다.</div></div>
+    <div class="step"><div class="num">4</div><div class="body"><b>결과 확인</b><br>중복 그룹별로 파일이 나열됩니다. 초록색 "유지"는 남길 파일, 빨간색 "삭제 예정"은 지울 파일입니다. 체크박스로 개별 선택을 바꿀 수 있으며, 유지 파일도 체크하면 삭제됩니다.</div></div>
+    <div class="step"><div class="num">5</div><div class="body"><b>삭제 실행</b><br>"선택한 파일 삭제" 버튼을 누르고 확인합니다. 선택된 파일이 휴지통으로 이동합니다 (실패 시 바탕화면 백업 폴더).</div></div>
+    <div class="step"><div class="num">6</div><div class="body"><b>복원</b><br>휴지통 또는 바탕화면 <code>_삭제된_중복영상</code> 폴더에서 복원할 수 있습니다.</div></div>
+  </div>
+
+  <div class="card">
+    <h2>5. 품질 비교 기준</h2>
+    <p>같은 그룹 안에서 아래 순서로 점수를 비교해 가장 높은 파일 1개를 "유지"로 정합니다.</p>
+    <ol>
+      <li><b>해상도 (픽셀 수)</b> — width × height가 클수록 좋음</li>
+      <li><b>비트레이트</b> — 높을수록 화질이 좋음</li>
+      <li><b>파일 용량</b> — 같은 길이라면 클수록 정보량이 많음</li>
+      <li><b>프레임 레이트 (FPS)</b></li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>6. 중복 판별 방식</h2>
+    <ul>
+      <li>영상 길이가 비슷한 파일끼리 후보로 묶습니다 (±2초 또는 1%).</li>
+      <li>각 영상에서 균등 간격으로 프레임을 샘플링해 지각 해시(pHash)를 계산합니다.</li>
+      <li>프레임 해시의 평균 해밍 거리가 임계값 이하이면 "같은 영상"으로 판단합니다.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>7. 옵션 상세</h2>
+    <table>
+      <tr><th>옵션</th><th>기본값</th><th>권장 조정</th></tr>
+      <tr><td>샘플 프레임 수</td><td>8</td><td>정확도를 높이려면 12~16, 속도를 높이려면 4~6</td></tr>
+      <tr><td>유사도 임계값</td><td>12</td><td>압축 차이가 큰 중복은 15~20, 오탐이 많으면 8~10</td></tr>
+    </table>
+    <div class="warn">⚠ 임계값을 너무 높이면 서로 다른 영상이 같은 그룹으로 묶일 수 있습니다. 결과를 꼭 확인하세요.</div>
+  </div>
+
+  <div class="card">
+    <h2>8. 지원 형식</h2>
+    <p>mp4, mkv, avi, mov, wmv, flv, webm, m4v, mpg, mpeg, ts, m2ts, 3gp</p>
+  </div>
+
+  <div class="card">
+    <h2>9. FFmpeg 자동 설치</h2>
+    <p>프로그램 실행 시 FFmpeg가 없으면 자동으로 다운로드/설치할지 묻습니다.</p>
+    <ul>
+      <li>약 110MB 다운로드 (인터넷 필요)</li>
+      <li>진행률과 다운로드량이 표시됩니다</li>
+      <li>설치 후에는 "FFmpeg 확인됨" 로그가 나타납니다</li>
+      <li>나중에 설치하려면 "FFmpeg 자동 설치" 버튼을 누르세요</li>
+      <li>자동 설치가 실패하면 아래 수동 설치 방법을 따라주세요</li>
+    </ul>
+    <h3>수동 설치 방법</h3>
+    <ol>
+      <li>https://www.gyan.dev/ffmpeg/builds/ 에서 ffmpeg-release-essentials.zip 다운로드</li>
+      <li>압축 해제 후 <code>bin</code> 폴더를 원하는 위치에 둡니다 (예: <code>C:\ffmpeg\bin</code>)</li>
+      <li>시스템 환경 변수 <code>Path</code>에 해당 <code>bin</code> 폴더 경로를 추가</li>
+      <li>새 명령 프롬프트에서 <code>ffmpeg -version</code>, <code>ffprobe -version</code>으로 확인</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>10. 문제 해결 (FAQ)</h2>
+    <h3>Q. 스캔이 너무 느려요.</h3>
+    <p>A. 샘플 프레임 수를 4~6으로 줄이거나, 하위 폴더 옵션을 끄고 작은 폴더부터 스캔하세요.</p>
+    <h3>Q. 같은 영상인데 그룹으로 묶이지 않아요.</h3>
+    <p>A. 유사도 임계값을 15~20으로 올려보세요.</p>
+    <h3>Q. 다른 영상인데 같은 그룹으로 묶였어요.</h3>
+    <p>A. 유사도 임계값을 8~10으로 낮추세요. 삭제 전 반드시 결과를 확인하세요.</p>
+    <h3>Q. 삭제가 안 돼요 / WinError가 나요.</h3>
+    <p>A. 휴지통 이동을 우선 시도하고, 실패 시 바탕화면 <code>_삭제된_중복영상</code> 폴더로 이동합니다. 파일이 사용 중이거나 잠겨 있으면 실패할 수 있습니다.</p>
+    <h3>Q. exe 실행 시 보안 경고가 떠요.</h3>
+    <p>A. "추가 정보 → 실행"을 선택하세요. (서명되지 않은 exe의 정상 경고입니다.)</p>
+  </div>
+
+  <div class="card">
+    <h2>11. 주의사항</h2>
+    <ul>
+      <li>삭제는 휴지통 이동이지만, 대량 삭제 전에는 <b>반드시 결과를 확인</b>하세요.</li>
+      <li>스캔 중 CPU와 디스크를 사용합니다. 다른 무거운 작업과 동시에 실행하지 마세요.</li>
+      <li>네트워크 드라이브의 파일은 휴지통 이동이 실패할 수 있습니다. 이 경우 백업 폴더로 이동합니다.</li>
+    </ul>
+  </div>
+
+  <footer>
+    동영상 중복 제거기 · exe 배포판<br>
+    도움말 버튼으로 이 문서를 언제든 다시 열 수 있습니다.
+  </footer>
+</div>
+</body>
+</html>
